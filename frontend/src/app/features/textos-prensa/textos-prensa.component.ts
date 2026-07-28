@@ -26,7 +26,7 @@ export class TextosPrensaComponent implements AfterViewInit {
       fuente: 'La crónica de Montilla',
       fecha: 'Diciembre de 2018',
       imagen: 'assets/images/prensa/030.jpg',
-      textoTranscrito: 'La Galería de Arte José Pedraza acogió hasta el pasado 13 de diciembre una nueva exposición de pintura, en este caso del artista rambleño Rafael Lucena, quien apostó por la sala decana de la provincia para mostrar "El qnsia de vivir", una veintena de pinturas de técnica mixta y en pequeño o mediano formato.'
+      textoTranscrito: 'La Galería de Arte José Pedraza acogió hasta el pasado 13 de diciembre una nueva exposición de pintura, en este caso del artista rambleño Rafael Lucena, quien apostó por la sala decana de la provincia para mostrar "El ansia de vivir", una veintena de pinturas de técnica mixta y en pequeño o mediano formato.'
     },
     {
       id: 0,
