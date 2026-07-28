@@ -1,0 +1,11 @@
+<a class="obra-card" [routerLink]="['/galeria', obra.id]" [queryParams]="queryParams">
+  <div class="obra-card__imagen-wrapper">
+    <img [src]="imagenPrincipal" [alt]="obra.titulo" class="obra-card__imagen" loading="lazy" />
+  </div>
+  <div class="obra-card__info">
+    <h3 class="obra-card__titulo">{{ obra.titulo }}</h3>
+    <p class="obra-card__meta">
+      @if (obra.anio) { {{ obra.anio }} }
+    </p>
+  </div>
+</a>

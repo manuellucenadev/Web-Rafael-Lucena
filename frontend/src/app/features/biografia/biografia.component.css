@@ -1,0 +1,43 @@
+.biografia {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 4rem;
+}
+
+.biografia__contenido {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.biografia__foto img {
+  width: 100%;
+  border-radius: 8px;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  background-color: #ece7df;
+}
+
+.biografia__texto h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  color: #1f1c1a;
+  margin-bottom: 1.25rem;
+}
+
+.biografia__texto p {
+  color: #4a443c;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .biografia__contenido {
+    grid-template-columns: 1fr;
+  }
+
+  .biografia__foto img {
+    aspect-ratio: 4 / 3;
+  }
+}

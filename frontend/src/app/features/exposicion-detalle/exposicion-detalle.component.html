@@ -1,0 +1,44 @@
+<section class="exposicion-detalle">
+  @if (cargando) {
+    <p class="exposicion-detalle__estado">Cargando exposición...</p>
+  } @else if (error || !exposicion) {
+    <div class="exposicion-detalle__estado">
+      <p>No se ha encontrado la exposición.</p>
+      <a routerLink="/exposiciones" class="exposicion-detalle__volver">&larr; Volver a exposiciones</a>
+    </div>
+  } @else {
+    <a routerLink="/exposiciones" class="exposicion-detalle__volver">&larr; Volver a exposiciones</a>
+
+    <header class="exposicion-detalle__header">
+      <h1>{{ exposicion.titulo }}</h1>
+      @if (exposicion.lugar) {
+        <p class="exposicion-detalle__lugar">{{ exposicion.lugar }}</p>
+      }
+      @if (exposicion.fechaInicio) {
+        <p class="exposicion-detalle__fechas">
+          {{ exposicion.fechaInicio }}
+          @if (exposicion.fechaFin) { &mdash; {{ exposicion.fechaFin }} }
+        </p>
+      }
+      @if (exposicion.descripcion) {
+        @if (anclaTexto) {
+          <a [routerLink]="['/prensa']" [fragment]="anclaTexto" class="exposicion-detalle__descripcion-link">
+          <p class="exposicion-detalle__descripcion">{{ exposicion.descripcion }}</p>
+          </a>
+        } @else {
+          <p class="exposicion-detalle__descripcion">{{ exposicion.descripcion }}</p>
+        }
+      }
+    </header>
+
+    @if (exposicion.obras && exposicion.obras.length > 0) {
+      <div class="exposicion-detalle__grid">
+        @for (obra of exposicion.obras; track obra.id) {
+          <app-obra-card [obra]="obra" [exposicionId]="exposicion.id"></app-obra-card>
+        }
+      </div>
+    } @else {
+      <p class="exposicion-detalle__estado">No hay obras registradas para esta exposición.</p>
+    }
+  }
+</section>

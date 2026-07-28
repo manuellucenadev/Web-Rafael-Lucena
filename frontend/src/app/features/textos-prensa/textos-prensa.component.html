@@ -1,0 +1,36 @@
+<section class="prensa">
+  <header class="prensa__header">
+    <h1>Reseñas</h1>
+    <p>Textos, prensa y crítica.</p>
+  </header>
+
+  @if (recortes.length === 0) {
+    <p class="prensa__estado">Próximamente se publicarán recortes y textos.</p>
+  } @else {
+    <div class="prensa__lista">
+      @for (recorte of recortes; track recorte.id) {
+        <article class="recorte-card" [id]="'texto-' + recorte.id">
+          <div class="recorte-card__imagen-wrapper" (click)="abrirLightbox(recorte.imagen)" title="Haz clic para ampliar">
+            <img [src]="recorte.imagen" [alt]="recorte.titulo" class="recorte-card__imagen" loading="lazy" />
+            <span class="recorte-card__zoom-hint">🔍</span>
+          </div>
+          <div class="recorte-card__info">
+            <h3>{{ recorte.titulo }}</h3>
+            <p class="recorte-card__fuente">
+              {{ recorte.fuente }}
+              @if (recorte.fecha) { · {{ recorte.fecha }} }
+            </p>
+            <p class="recorte-card__texto">{{ recorte.textoTranscrito }}</p>
+          </div>
+        </article>
+      }
+    </div>
+  }
+</section>
+
+@if (imagenLightbox) {
+  <div class="lightbox" (click)="cerrarLightbox()">
+    <button class="lightbox__cerrar" (click)="cerrarLightbox()">✕</button>
+    <img [src]="imagenLightbox" alt="Recorte ampliado" (click)="$event.stopPropagation()" />
+  </div>
+}

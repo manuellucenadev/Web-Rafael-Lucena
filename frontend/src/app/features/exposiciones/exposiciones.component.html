@@ -1,0 +1,64 @@
+<section class="exposiciones">
+  <header class="exposiciones__header">
+    <h1>Exposiciones</h1>
+  </header>
+
+  @if (cargando) {
+    <p class="exposiciones__estado">Cargando exposiciones...</p>
+  } @else if (error) {
+    <p class="exposiciones__estado exposiciones__estado--error">
+      No se han podido cargar las exposiciones.
+    </p>
+  } @else {
+
+    @if (proximas.length > 0) {
+      <div class="exposiciones__bloque">
+        <h2>Próximas y actuales</h2>
+        <div class="exposiciones__lista">
+          @for (exp of proximas; track exp.id) {
+            <a class="exposicion-card exposicion-card--destacada" [routerLink]="['/exposiciones', exp.id]">
+              @if (resolverImagen(exp.imagenCartel)) {
+                <img [src]="resolverImagen(exp.imagenCartel)" [alt]="exp.titulo" class="exposicion-card__img" />
+              }
+              <div class="exposicion-card__info">
+                <h3>{{ exp.titulo }}</h3>
+                @if (exp.lugar) { <p class="exposicion-card__lugar">{{ exp.lugar }}</p> }
+                @if (exp.fechaInicio) {
+                  <p class="exposicion-card__fechas">
+                    {{ exp.fechaInicio }} @if (exp.fechaFin) { &mdash; {{ exp.fechaFin }} }
+                  </p>
+                }
+                @if (exp.descripcion) { <p class="exposicion-card__desc">{{ exp.descripcion }}</p> }
+              </div>
+            </a>
+          }
+        </div>
+      </div>
+    }
+
+    @if (pasadas.length > 0) {
+      <div class="exposiciones__bloque">
+        <h2>Anteriores</h2>
+        <div class="exposiciones__lista">
+          @for (exp of pasadas; track exp.id) {
+            <a class="exposicion-card" [routerLink]="['/exposiciones', exp.id]">
+              <div class="exposicion-card__info">
+                <h3>{{ exp.titulo }}</h3>
+                @if (exp.lugar) { <p class="exposicion-card__lugar">{{ exp.lugar }}</p> }
+                @if (exp.fechaInicio) {
+                  <p class="exposicion-card__fechas">
+                    {{ exp.fechaInicio }} @if (exp.fechaFin) { &mdash; {{ exp.fechaFin }} }
+                  </p>
+                }
+              </div>
+            </a>
+          }
+        </div>
+      </div>
+    }
+
+    @if (proximas.length === 0 && pasadas.length === 0) {
+      <p class="exposiciones__estado">Aún no hay exposiciones registradas.</p>
+    }
+  }
+</section>

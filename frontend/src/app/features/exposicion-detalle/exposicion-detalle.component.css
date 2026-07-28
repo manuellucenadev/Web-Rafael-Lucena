@@ -1,0 +1,71 @@
+.exposicion-detalle {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+.exposicion-detalle__estado {
+  text-align: center;
+  color: #7a7468;
+  padding: 3rem 0;
+}
+
+.exposicion-detalle__volver {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  color: #1f1c1a;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.exposicion-detalle__volver:hover {
+  color: #e3b04b;
+}
+
+.exposicion-detalle__header {
+  margin-bottom: 2.5rem;
+}
+
+.exposicion-detalle__header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  color: #1f1c1a;
+  margin-bottom: 0.5rem;
+}
+
+.exposicion-detalle__lugar {
+  color: #6b6457;
+  margin-bottom: 0.25rem;
+}
+
+.exposicion-detalle__fechas {
+  color: #e3b04b;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.exposicion-detalle__descripcion {
+  color: #4a443c;
+  line-height: 1.6;
+  max-width: 700px;
+}
+
+.exposicion-detalle__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.exposicion-detalle__descripcion-link {
+  text-decoration: none;
+  display: block;
+}
+
+.exposicion-detalle__descripcion-link:hover .exposicion-detalle__descripcion {
+  color: #e3b04b;
+}
+
+.exposicion-detalle__descripcion {
+  transition: color 0.2s ease;
+}

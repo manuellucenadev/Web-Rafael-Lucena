@@ -1,0 +1,88 @@
+<section class="detalle">
+  @if (cargando) {
+    <p class="detalle__estado">Cargando obra...</p>
+  } @else if (error || !obra) {
+    <div class="detalle__estado">
+      <p>No se ha encontrado la obra solicitada.</p>
+      <a routerLink="/galeria" class="detalle__volver">&larr; Volver a la galería</a>
+    </div>
+  } @else {
+    <a routerLink="/galeria" class="detalle__volver">&larr; Volver a la galería</a>
+    @if (exposicionId) {
+      <a [routerLink]="['/exposiciones', exposicionId]" class="detalle__volver" style="margin-left: 1rem;">
+        &larr; Volver a la exposición
+      </a>
+    }
+    @if (desdeInicio) {
+      <a routerLink="/" class="detalle__volver" style="margin-left: 1rem;">
+        &larr; Volver a inicio
+      </a>
+    }
+
+    <div class="detalle__contenido">
+      <div class="detalle__galeria">
+        <div class="detalle__imagen-principal" (click)="abrirLightbox()" title="Haz clic para ampliar">
+          @if (imagenActiva) {
+            <img [src]="imagenActiva" [alt]="obra.titulo" />
+            <span class="detalle__zoom-hint">🔍</span>
+          } @else {
+            <div class="detalle__sin-imagen">Sin imagen disponible</div>
+          }
+        </div>
+
+        @if (obra.imagenes && obra.imagenes.length > 1) {
+          <div class="detalle__miniaturas">
+            @for (img of obra.imagenes; track img.id) {
+              <button class="detalle__miniatura" (click)="seleccionarImagen(img.url)">
+                <img [src]="resolverUrl(img.url)" [alt]="obra.titulo" />
+              </button>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="detalle__info">
+        <h1>{{ obra.titulo }}</h1>
+
+        @if (obra.tecnica) {
+          <span class="detalle__tecnica">{{ obra.tecnica.nombre }}</span>
+        }
+        
+        @if (obra.premio) {
+          <p class="detalle__premio"> {{ obra.premio }}</p>
+        }
+
+        @if (obra.descripcion) {
+          <p class="detalle__descripcion">{{ obra.descripcion }}</p>
+        }
+
+        <dl class="detalle__ficha">
+          @if (obra.dimensiones) {
+            <div><dt>Dimensiones</dt><dd>{{ obra.dimensiones }}</dd></div>
+          }
+          @if (obra.anio) {
+            <div><dt>Año</dt><dd>{{ obra.anio }}</dd></div>
+          }
+          <div>
+            <dt>Disponibilidad</dt>
+            <dd>{{ obra.disponible ? 'Disponible' : 'No disponible' }}</dd>
+          </div>
+          @if (obra.disponible && obra.precio) {
+            <div><dt>Precio</dt><dd>{{ obra.precio }} €</dd></div>
+          }
+        </dl>
+
+        @if (obra.disponible) {
+          <a routerLink="/contacto" class="detalle__contacto-btn">Consultar disponibilidad</a>
+        }
+      </div>
+    </div>
+  }
+</section>
+
+@if (imagenLightbox) {
+  <div class="lightbox" (click)="cerrarLightbox()">
+    <button class="lightbox__cerrar" (click)="cerrarLightbox()">✕</button>
+    <img [src]="imagenLightbox" alt="Imagen ampliada" (click)="$event.stopPropagation()" />
+  </div>
+}

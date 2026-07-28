@@ -1,0 +1,64 @@
+<section class="galeria">
+  <header class="galeria__header">
+    <h1>Galería de obras</h1>
+  </header>
+
+  <div class="galeria__buscador">
+    <input
+      type="text"
+      placeholder="Buscar por título..."
+      [ngModel]="titulo"
+      (ngModelChange)="onTituloChange($event)"
+    />
+  </div>
+
+  <div class="galeria__filtros">
+    <button
+      class="filtro-btn"
+      [class.filtro-btn--activo]="disponibleFiltro === null"
+      (click)="filtrarPorDisponibilidad(null)">
+      Todas
+    </button>
+    <button
+      class="filtro-btn"
+      [class.filtro-btn--activo]="disponibleFiltro === true"
+      (click)="filtrarPorDisponibilidad(true)">
+      Disponibles
+    </button>
+  </div>
+
+  @if (tematicas.length > 0) {
+    <div class="galeria__filtros">
+      <button
+        class="filtro-btn"
+        [class.filtro-btn--activo]="tematicaSeleccionada === null"
+        (click)="filtrarPorTematica(null)">
+        Todas las temáticas
+      </button>
+      @for (tematica of tematicas; track tematica.id) {
+        <button
+          class="filtro-btn"
+          [class.filtro-btn--activo]="tematicaSeleccionada === tematica.id"
+          (click)="filtrarPorTematica(tematica.id)">
+          {{ tematica.nombre }}
+        </button>
+      }
+    </div>
+  }
+
+  @if (cargando) {
+    <p class="galeria__estado">Cargando obras...</p>
+  } @else if (error) {
+    <p class="galeria__estado galeria__estado--error">
+      No se han podido cargar las obras. Comprueba que el backend esté en marcha.
+    </p>
+  } @else if (obras.length === 0) {
+    <p class="galeria__estado">No se han encontrado obras con estos filtros.</p>
+  } @else {
+    <div class="galeria__grid">
+      @for (obra of obras; track obra.id) {
+        <app-obra-card [obra]="obra"></app-obra-card>
+      }
+    </div>
+  }
+</section>

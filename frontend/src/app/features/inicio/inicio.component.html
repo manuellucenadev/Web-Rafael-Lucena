@@ -1,0 +1,26 @@
+<section class="hero">
+  <div class="hero__contenido">
+    <h1>Rafael Lucena</h1>
+    <a routerLink="/galeria" class="hero__cta">Ver galería</a>
+  </div>
+</section>
+
+<section class="destacadas">
+  <h2>Obras destacadas</h2>
+
+  @if (cargando) {
+    <p class="destacadas__estado">Cargando...</p>
+  } @else if (destacadas.length === 0) {
+    <p class="destacadas__estado">Próximamente nuevas obras.</p>
+  } @else {
+    <div class="destacadas__grid">
+      @for (obra of destacadas; track obra.id) {
+        <app-obra-card [obra]="obra" [desdeInicio]="true"></app-obra-card>
+      }
+    </div>
+  }
+
+  <div class="destacadas__mas">
+    <a routerLink="/galeria">Ver toda la galería &rarr;</a>
+  </div>
+</section>

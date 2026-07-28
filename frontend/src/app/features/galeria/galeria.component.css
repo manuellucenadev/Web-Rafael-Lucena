@@ -1,0 +1,88 @@
+.galeria {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+.galeria__header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.galeria__header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  color: #1f1c1a;
+  margin-bottom: 0.5rem;
+}
+
+.galeria__header p {
+  color: #7a7468;
+}
+
+.galeria__filtros {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: 2.5rem;
+}
+
+.filtro-btn {
+  border: 1px solid #d9d3c7;
+  background-color: #fff;
+  color: #1f1c1a;
+  padding: 0.45rem 1.1rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filtro-btn:hover {
+  border-color: #e3b04b;
+}
+
+.filtro-btn--activo {
+  background-color: #1f1c1a;
+  color: #f5f1ea;
+  border-color: #1f1c1a;
+}
+
+.galeria__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.galeria__estado {
+  text-align: center;
+  color: #7a7468;
+  padding: 3rem 0;
+}
+
+.galeria__estado--error {
+  color: #b35454;
+}
+
+.galeria__buscador {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.galeria__buscador input {
+  width: 100%;
+  max-width: 420px;
+  padding: 0.6rem 1rem;
+  border: 1px solid #d9d3c7;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  color: #1f1c1a;
+  background-color: #fff;
+}
+
+.galeria__buscador input:focus {
+  outline: none;
+  border-color: #e3b04b;
+}
