@@ -16,3 +16,6 @@ frontend/.angular/
 frontend/npm-debug.log*
 
 *.pid
+
+dump_portfolio*.sql
+uploads.zip

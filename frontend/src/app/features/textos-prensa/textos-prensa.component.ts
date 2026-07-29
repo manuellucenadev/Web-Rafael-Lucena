@@ -175,7 +175,7 @@ export class TextosPrensaComponent implements AfterViewInit {
     {
       id: 17,
       titulo: 'Pinturas recientes de Rafael Lucena',
-      fuente: 'Ángel Luis Pérez Villén',
+      fuente: 'Ángel Luis Pérez Villén, Diario Córdoba',
       fecha: '2004',
       imagen: 'assets/images/prensa/017.jpg',
       textoTranscrito:'Equilibrio que se traslada a otros ámbitos, en los que se aprecia el ayuntamiento normativo entre el albero y la sangre, el gesto y la geometría, la pintura y el dibujo. Equilibrio que se rompe para horadar el ojo perenne que nos brinda la visión panorámica de la escena, que nos hace oscilar hasta adoptar la distancia correcta para advertir el escorzo o, después de un primer vistazo, deleitarnos en la sutura que el grafito dibuja sobre la piel de la pintura, para transmitir el pulso natural entre dos fuerzas contrapuestas.'
@@ -215,7 +215,7 @@ export class TextosPrensaComponent implements AfterViewInit {
     {
       id: 22,
       titulo: 'Lucena, en la José Pedraza',
-      fuente: 'Ángel Luis Pérez Villén',
+      fuente: 'Ángel Luis Pérez Villén, Diario Córdoba',
       fecha: '2001',
       imagen: 'assets/images/prensa/022.jpg',
       textoTranscrito:'Bodegones, paisajes y figuras constituyen el amplio abanico de intereses de género de la pintura de Rafael Lucena. Una pintura que sabe alternar los formatos sin sobresaltar al público, que se adentra en la composición equilibrando las intervenciones, moderando el acento matérico, dibujando mediante trazos indelebles, haciendo gala de la delicadeza de la factura y de los leves toques de color, del tratamiento superficial de la pintura y de las sugerencias de la representación'
@@ -271,7 +271,7 @@ export class TextosPrensaComponent implements AfterViewInit {
     {
       id: 28,
       titulo: 'Rafael Lucena, primer premio de Artes Plásticas Ciudad de Córdoba',
-      fuente: 'El mundo',
+      fuente: 'El Mundo',
       fecha: '15 de octubre de 1997',
       imagen: 'assets/images/prensa/028.jpg',
       textoTranscrito:'El primer premio de Artes Plásticas Ciudad de Córdoba Antonio del Castillo, que otorga el Ayuntamiento de Córdoba, ha recaído en Rafael Lucena, profesor de dibujo y pintura, por Taurus III. Al certamen concurrieron 67 artistas, 29 de los cuales han sido seleccionados para conformar la exposición. Las obras tienen en común la temática de la lidia, como homenaje a Manolete.'
