@@ -38,3 +38,7 @@ export class ObraCardComponent {
   }
 
   guardarScroll(): void {
+    this.scrollPositionService.save('galeria', window.scrollY);
+  }
+
+}
