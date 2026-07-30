@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -7,6 +7,7 @@ import { TematicaService } from '../../core/services/tematica.service';
 import { Obra } from '../../core/models/obra.model';
 import { Tematica } from '../../core/models/tematica.model';
 import { ObraCardComponent } from './obra-card/obra-card.component';
+import { ScrollPositionService } from '../../core/services/scroll-position.service';
 
 @Component({
   selector: 'app-galeria',
@@ -28,10 +29,12 @@ export class GaleriaComponent implements OnInit {
   error = false;
 
   private tituloSubject = new Subject<string>();
+  private readonly scrollKey = 'galeria';
 
   constructor(
     private obraService: ObraService,
-    private tematicaService: TematicaService
+    private tematicaService: TematicaService,
+    private scrollPositionService: ScrollPositionService
   ) {
     this.tituloSubject.pipe(debounceTime(400)).subscribe(() => this.cargarObras());
   }
@@ -39,6 +42,11 @@ export class GaleriaComponent implements OnInit {
   ngOnInit(): void {
     this.cargarTematicas();
     this.cargarObras();
+  }
+
+  @HostListener('window:beforeunload')
+  guardarScrollAntesDeSalir(): void {
+    this.scrollPositionService.save(this.scrollKey, window.scrollY);
   }
 
   cargarTematicas(): void {
@@ -87,12 +95,20 @@ export class GaleriaComponent implements OnInit {
       next: (obras) => {
         this.obras = obras;
         this.cargando = false;
+        this.restaurarScrollSiExiste();
       },
       error: () => {
         this.error = true;
         this.cargando = false;
       }
     });
+  }
+
+  private restaurarScrollSiExiste(): void {
+    const posicion = this.scrollPositionService.get(this.scrollKey);
+    if (posicion !== undefined) {
+      setTimeout(() => window.scrollTo({ top: posicion, behavior: 'auto' }), 50);
+    }
   }
 
 }

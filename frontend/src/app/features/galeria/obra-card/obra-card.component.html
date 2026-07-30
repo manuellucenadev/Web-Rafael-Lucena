@@ -1,4 +1,4 @@
-<a class="obra-card" [routerLink]="['/galeria', obra.id]" [queryParams]="queryParams">
+<a class="obra-card" [routerLink]="['/galeria', obra.id]" [queryParams]="queryParams" (click)="guardarScroll()">
   <div class="obra-card__imagen-wrapper">
     <img [src]="imagenPrincipal" [alt]="obra.titulo" class="obra-card__imagen" loading="lazy" />
   </div>
