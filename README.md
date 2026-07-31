@@ -1,28 +1,6 @@
-# Rafael Lucena — Web de Artista
-
-Portfolio web para mostrar las obras, técnicas, temáticas y exposiciones del pintor Rafael Lucena. Proyecto full-stack desarrollado como parte de mi portfolio personal (CV / GitHub).
-
-## Stack tecnológico
-
-- **Frontend**: Angular 17 (standalone components), TypeScript, CSS
-- **Backend**: Spring Boot 3 (Java 17), Spring Data JPA, Spring Security
-- **Base de datos**: MySQL 8
-- **Infraestructura**: Docker, Docker Compose, Nginx (servir frontend + proxy a la API)
-- **CI/CD**: GitHub Actions (pendiente de configurar)
-
-## Estructura del proyecto
-
-```
-webrafaellucena/
-├── backend/      # API REST en Spring Boot
-├── frontend/     # Aplicación Angular
-├── docker-compose.yml
-└── .env.example
-```
-
 ## Modelo de datos
 
-- **Tecnica**: técnica artística (óleo, acrílico, técnica mixta sobre lienzo...)
+- **Tecnica**: técnica artística (óleo, acrílico, mixta/lienzo...)
 - **Tematica**: temática de la obra (Tauromaquia, Figura, Paisaje, Bodegón)
 - **Obra**: cuadro individual (título, descripción, año, técnica, temática, dimensiones, precio, disponibilidad, premio/mención, si es destacada)
 - **ImagenObra**: imágenes asociadas a una obra
@@ -30,23 +8,25 @@ webrafaellucena/
 
 ## Seguridad
 
-La API protege con autenticación HTTP Basic (usuario administrador único) todas las operaciones de escritura (`POST`, `PUT`, `DELETE`) sobre obras, exposiciones, técnicas, temáticas e imágenes. Las rutas de lectura (`GET`) son públicas, así como el envío del formulario de contacto (`POST /api/contacto`).
+- La API protege con autenticación HTTP Basic (usuario administrador único) todas las operaciones de escritura (`POST`, `PUT`, `DELETE`) sobre obras, exposiciones, técnicas, temáticas e imágenes. Las rutas de lectura (`GET`) son públicas, así como el envío del formulario de contacto (`POST /api/contacto`).
+- En producción, MySQL y el backend no están expuestos directamente a internet: solo el frontend recibe tráfico externo, gestionado por Nginx como reverse proxy con certificado SSL (Let's Encrypt).
+- CORS configurado para restringir los orígenes permitidos al dominio de producción.
 
-## Puesta en marcha con Docker
+## Puesta en marcha con Docker (entorno local)
 
 1. Copia el archivo de variables de entorno:
 
-   ```bash
+```bash
    cp .env.example .env
-   ```
+```
 
 2. Completa en `.env` las credenciales de MySQL, del correo de contacto (SMTP) y del usuario administrador (`ADMIN_USERNAME` / `ADMIN_PASSWORD`).
 
 3. Levanta todos los servicios:
 
-   ```bash
+```bash
    docker compose up --build
-   ```
+```
 
 4. Accede a:
    - Frontend: http://localhost:4200
@@ -90,14 +70,22 @@ La app estará disponible en http://localhost:4200 y consumirá la API en http:/
 | GET    | `/api/imagenes/{filename}`         | Servir una imagen                         | No |
 | POST   | `/api/contacto`                    | Envío del formulario de contacto          | No |
 
+## Despliegue en producción
+
+La aplicación está desplegada en un VPS con Docker Compose, con Nginx como reverse proxy gestionando HTTPS (Let's Encrypt). El flujo de despliegue:
+
+```bash
+git pull
+docker compose up -d --build
+```
+
 ## Pendiente / posibles mejoras
 
 - Panel de administración para gestionar obras y exposiciones sin tocar código
-- Optimización de imágenes (conversión a WebP, distintos tamaños)
+- Optimización de imágenes (miniaturas, conversión a WebP...)
 - Tests unitarios e integración (backend y frontend)
-- Pipeline de CI/CD con GitHub Actions (build + tests + despliegue)
-- Despliegue en producción con dominio propio y HTTPS
+- Pipeline de CI/CD con GitHub Actions (build + tests + despliegue automático)
 
 ## Autor
 
-Desarrollado por Manuel Lucena Marín como proyecto personal para mostrar habilidades full-stack (Angular + Spring Boot + Docker), para la web de artista de su padre, el pintor Rafael Lucena.
+Desarrollado por [Manuel Lucena Marín](https://www.linkedin.com/in/manuel-lucena-marin/) como proyecto personal para mostrar habilidades full-stack (Angular + Spring Boot + Docker), para la web de artista de su padre, el pintor Rafael Lucena.
