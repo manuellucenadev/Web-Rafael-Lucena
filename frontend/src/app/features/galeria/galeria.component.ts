@@ -30,6 +30,7 @@ export class GaleriaComponent implements OnInit {
 
   private tituloSubject = new Subject<string>();
   private readonly scrollKey = 'galeria';
+  private esCargaInicial = true;
 
   constructor(
     private obraService: ObraService,
@@ -91,11 +92,16 @@ export class GaleriaComponent implements OnInit {
       filtros.disponible = this.disponibleFiltro;
     }
 
+    const esCargaQueDebeRestaurar = this.esCargaInicial;
+    this.esCargaInicial = false;
+
     this.obraService.getAll(Object.keys(filtros).length ? filtros : undefined).subscribe({
       next: (obras) => {
         this.obras = obras;
         this.cargando = false;
-        this.restaurarScrollSiExiste();
+        if (esCargaQueDebeRestaurar) {
+          this.restaurarScrollSiExiste();
+        }
       },
       error: () => {
         this.error = true;
@@ -108,6 +114,7 @@ export class GaleriaComponent implements OnInit {
     const posicion = this.scrollPositionService.get(this.scrollKey);
     if (posicion !== undefined) {
       setTimeout(() => window.scrollTo({ top: posicion, behavior: 'auto' }), 50);
+      this.scrollPositionService.clear(this.scrollKey);
     }
   }
 

@@ -11,4 +11,8 @@ export class ScrollPositionService {
   get(key: string): number | undefined {
     return this.positions.get(key);
   }
+
+  clear(key: string): void {
+    this.positions.delete(key);
+  }
 }
