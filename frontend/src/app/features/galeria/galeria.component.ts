@@ -37,10 +37,14 @@ export class GaleriaComponent implements OnInit {
     private tematicaService: TematicaService,
     private scrollPositionService: ScrollPositionService
   ) {
-    this.tituloSubject.pipe(debounceTime(400)).subscribe(() => this.cargarObras());
+    this.tituloSubject.pipe(debounceTime(400)).subscribe(() => {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      this.cargarObras();
+    });
   }
 
   ngOnInit(): void {
+    this.restaurarFiltrosSiExisten();
     this.cargarTematicas();
     this.cargarObras();
   }
@@ -48,6 +52,23 @@ export class GaleriaComponent implements OnInit {
   @HostListener('window:beforeunload')
   guardarScrollAntesDeSalir(): void {
     this.scrollPositionService.save(this.scrollKey, window.scrollY);
+  }
+
+  private restaurarFiltrosSiExisten(): void {
+    const filtrosGuardados = this.scrollPositionService.getFiltros();
+    if (filtrosGuardados) {
+      this.titulo = filtrosGuardados.titulo;
+      this.disponibleFiltro = filtrosGuardados.disponibleFiltro;
+      this.tematicaSeleccionada = filtrosGuardados.tematicaSeleccionada;
+    }
+  }
+
+  private guardarFiltros(): void {
+    this.scrollPositionService.saveFiltros({
+      titulo: this.titulo,
+      disponibleFiltro: this.disponibleFiltro,
+      tematicaSeleccionada: this.tematicaSeleccionada
+    });
   }
 
   cargarTematicas(): void {
@@ -64,11 +85,13 @@ export class GaleriaComponent implements OnInit {
 
   filtrarPorDisponibilidad(valor: boolean | null): void {
     this.disponibleFiltro = valor;
+    window.scrollTo({ top: 0, behavior: 'auto' });
     this.cargarObras();
   }
 
   filtrarPorTematica(tematicaId: number | null): void {
     this.tematicaSeleccionada = tematicaId;
+    window.scrollTo({ top: 0, behavior: 'auto' });
     this.cargarObras();
   }
 
@@ -91,6 +114,8 @@ export class GaleriaComponent implements OnInit {
     if (this.disponibleFiltro !== null) {
       filtros.disponible = this.disponibleFiltro;
     }
+
+    this.guardarFiltros();
 
     const esCargaQueDebeRestaurar = this.esCargaInicial;
     this.esCargaInicial = false;
