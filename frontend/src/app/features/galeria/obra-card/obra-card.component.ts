@@ -31,6 +31,18 @@ export class ObraCardComponent {
     return `${apiBase}${principal.url}`;
   }
 
+  get imagenMiniatura(): string {
+    const principal = this.obra.imagenes?.find(img => img.esPrincipal) ?? this.obra.imagenes?.[0];
+    if (!principal) {
+      return 'assets/images/placeholder-obra.jpg';
+    }
+    if (principal.url.startsWith('/api/imagenes/')) {
+      const apiBase = environment.apiUrl.replace(/\/api$/, '');
+      return `${apiBase}${principal.url}/thumb`;
+    }
+    return this.imagenPrincipal;
+  }
+
   get queryParams(): { from?: string | number } {
     if (this.exposicionId) return { from: this.exposicionId };
     if (this.desdeInicio) return { from: 'inicio' };
@@ -38,6 +50,7 @@ export class ObraCardComponent {
   }
 
   guardarScroll(): void {
+    if (this.exposicionId || this.desdeInicio) return;
     this.scrollPositionService.save('galeria', window.scrollY);
   }
 

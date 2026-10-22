@@ -1,6 +1,6 @@
 <a class="obra-card" [routerLink]="['/galeria', obra.id]" [queryParams]="queryParams" (click)="guardarScroll()">
   <div class="obra-card__imagen-wrapper">
-    <img [src]="imagenPrincipal" [alt]="obra.titulo" class="obra-card__imagen" loading="lazy" />
+    <img [src]="imagenMiniatura" [alt]="obra.titulo" class="obra-card__imagen" loading="lazy" decoding="async" />
   </div>
   <div class="obra-card__info">
     <h3 class="obra-card__titulo">{{ obra.titulo }}</h3>

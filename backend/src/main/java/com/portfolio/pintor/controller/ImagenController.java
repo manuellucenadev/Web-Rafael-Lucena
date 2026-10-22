@@ -2,6 +2,7 @@ package com.portfolio.pintor.controller;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -21,8 +23,10 @@ import java.util.UUID;
 public class ImagenController {
 
     private static final List<String> EXTENSIONES_PERMITIDAS = List.of(".jpg", ".jpeg", ".png", ".webp", ".gif");
+    private static final CacheControl CACHE = CacheControl.maxAge(Duration.ofDays(1)).cachePublic();
 
     private final Path uploadDir = Paths.get("uploads").toAbsolutePath().normalize();
+    private final Path thumbsDir = uploadDir.resolve("thumbs").normalize();
 
     public ImagenController() throws IOException {
         if (!Files.exists(uploadDir)) {
@@ -64,7 +68,7 @@ public class ImagenController {
 
         Resource resource = new UrlResource(filePath.toUri());
 
-        if (!resource.exists() || !resource.isReadable()) {
+        if (!resource.exists() || !resource.isReadable() || Files.isDirectory(filePath)) {
             return ResponseEntity.notFound().build();
         }
 
@@ -74,8 +78,27 @@ public class ImagenController {
         }
 
         return ResponseEntity.ok()
+                .cacheControl(CACHE)
+                .lastModified(Files.getLastModifiedTime(filePath).toInstant())
                 .contentType(MediaType.parseMediaType(contentType))
                 .body(resource);
+    }
+
+    @GetMapping("/{filename}/thumb")
+    public ResponseEntity<Resource> getMiniatura(@PathVariable String filename) throws IOException {
+        int punto = filename.lastIndexOf('.');
+        String base = punto > 0 ? filename.substring(0, punto) : filename;
+        Path miniatura = thumbsDir.resolve(base + ".webp").normalize();
+
+        if (miniatura.startsWith(thumbsDir) && Files.isReadable(miniatura)) {
+            return ResponseEntity.ok()
+                    .cacheControl(CACHE)
+                    .lastModified(Files.getLastModifiedTime(miniatura).toInstant())
+                    .contentType(MediaType.parseMediaType("image/webp"))
+                    .body(new UrlResource(miniatura.toUri()));
+        }
+
+        return getImagen(filename);
     }
 
 }
