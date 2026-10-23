@@ -4,7 +4,7 @@ const sharp = require('sharp');
 
 const UPLOADS = process.env.UPLOADS_DIR || '/uploads';
 const THUMBS = path.join(UPLOADS, 'thumbs');
-const ANCHO = 640;
+const ANCHO = 1000;
 const CALIDAD = 75;
 
 fs.mkdirSync(THUMBS, { recursive: true });

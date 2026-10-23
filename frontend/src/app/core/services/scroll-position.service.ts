@@ -10,6 +10,7 @@ export interface FiltrosGaleria {
 export class ScrollPositionService {
   private positions = new Map<string, number>();
   private filtros: FiltrosGaleria | null = null;
+  private visibles = 0;
 
   save(key: string, position: number): void {
     this.positions.set(key, position);
@@ -29,5 +30,13 @@ export class ScrollPositionService {
 
   getFiltros(): FiltrosGaleria | null {
     return this.filtros;
+  }
+
+  saveVisibles(n: number): void {
+    this.visibles = n;
+  }
+
+  getVisibles(): number {
+    return this.visibles;
   }
 }

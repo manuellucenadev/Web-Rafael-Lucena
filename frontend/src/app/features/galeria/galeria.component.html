@@ -54,11 +54,18 @@
     </p>
   } @else if (obras.length === 0) {
     <p class="galeria__estado">No se han encontrado obras con estos filtros.</p>
-  } @else {
+    } @else {
     <div class="galeria__grid">
-      @for (obra of obras; track obra.id) {
+      @for (obra of obrasVisibles; track obra.id) {
         <app-obra-card [obra]="obra"></app-obra-card>
       }
     </div>
+
+    @if (visibles < obras.length) {
+      <div class="galeria__ver-mas">
+        <p class="galeria__contador">Mostrando {{ visibles }} de {{ obras.length }} obras</p>
+        <button class="galeria__ver-mas-btn" (click)="verMas()">Ver más</button>
+      </div>
+    }
   }
 </section>

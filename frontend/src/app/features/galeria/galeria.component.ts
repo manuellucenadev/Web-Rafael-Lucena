@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -28,6 +28,9 @@ export class GaleriaComponent implements OnInit {
   cargando = true;
   error = false;
 
+  private readonly pasoCarga = 24;
+  visibles = this.pasoCarga;
+
   private tituloSubject = new Subject<string>();
   private readonly scrollKey = 'galeria';
   private esCargaInicial = true;
@@ -49,9 +52,13 @@ export class GaleriaComponent implements OnInit {
     this.cargarObras();
   }
 
-  @HostListener('window:beforeunload')
-  guardarScrollAntesDeSalir(): void {
-    this.scrollPositionService.save(this.scrollKey, window.scrollY);
+  get obrasVisibles(): Obra[] {
+    return this.obras.slice(0, this.visibles);
+  }
+
+  verMas(): void {
+    this.visibles = Math.min(this.visibles + this.pasoCarga, this.obras.length);
+    this.scrollPositionService.saveVisibles(this.visibles);
   }
 
   private restaurarFiltrosSiExisten(): void {
@@ -119,6 +126,15 @@ export class GaleriaComponent implements OnInit {
 
     const esCargaQueDebeRestaurar = this.esCargaInicial;
     this.esCargaInicial = false;
+
+    // Al volver del detalle se repintan las tarjetas que había al salir;
+    // en cualquier otra carga (primera visita o cambio de filtro) se empieza de cero.
+    const hayPosicionGuardada =
+      esCargaQueDebeRestaurar && this.scrollPositionService.get(this.scrollKey) !== undefined;
+    this.visibles = hayPosicionGuardada
+      ? Math.max(this.pasoCarga, this.scrollPositionService.getVisibles())
+      : this.pasoCarga;
+    this.scrollPositionService.saveVisibles(this.visibles);
 
     this.obraService.getAll(Object.keys(filtros).length ? filtros : undefined).subscribe({
       next: (obras) => {

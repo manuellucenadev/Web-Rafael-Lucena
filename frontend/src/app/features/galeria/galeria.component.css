@@ -86,3 +86,30 @@
   outline: none;
   border-color: #e3b04b;
 }
+
+.galeria__ver-mas {
+  text-align: center;
+  margin-top: 2.5rem;
+}
+
+.galeria__contador {
+  color: #7a7468;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.galeria__ver-mas-btn {
+  border: 1px solid #1f1c1a;
+  background-color: #1f1c1a;
+  color: #f5f1ea;
+  padding: 0.6rem 1.8rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.galeria__ver-mas-btn:hover {
+  background-color: #fff;
+  color: #1f1c1a;
+}
